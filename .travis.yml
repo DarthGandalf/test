@@ -1,0 +1,9 @@
+language: cpp
+compiler:
+	- gcc
+	- clang
+script: ./configure && make
+notification:
+	irc:
+		channels:
+			- "irc.freenode.net#shellium-bots"
