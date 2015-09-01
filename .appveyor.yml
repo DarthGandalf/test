@@ -1,0 +1,6 @@
+version: 0.0.0.0.1-branch-{branch}-build-{build}
+build_script:
+  - ps: |
+      (New-Object PSObject |
+        Add-Member -PassThru NoteProperty foo 'bar') | ConvertTo-JSON
+test: off
