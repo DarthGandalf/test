@@ -1,6 +1,6 @@
 version: 0.0.0.0.1-branch-{branch}-build-{build}
 build_script:
-  - ps: Invoke-WebRequest $env:cygwin_url -OutFile c:\cygwin-setup.exe
+  - ps: Invoke-WebRequest https://cygwin.com/setup-x86.exe -OutFile c:\cygwin-setup.exe
   - c:\cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --only-site --site http://mirrors.kernel.org/sourceware/cygwin/ --root c:\cygwin-root --local-package-dir c:\cygwin-setup-cache --packages automake,gcc-g++,make,pkg-config,wget,openssl-devel,libicu-devel,zlib-devel,libcrypt-devel,perl,python3,swig,libsasl2-devel,python3-setuptools,socat
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - c:\cygwin-root\bin\sh -lc "uname -a"
