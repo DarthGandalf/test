@@ -28,38 +28,10 @@ from contextlib import contextmanager
 
 class TestZNC(unittest.TestCase):
 
-    @contextmanager
-    def run_znc(self):
-        znc = subprocess.Popen(['./znc', '--debug', '--datadir', self.config])
-        yield
-        znc.terminate()
-        # TODO: bump python requirements to 3.3 and use znc.wait(timeout=30) instead.
-        # Ubuntu Precise on Travis has too old python.
-        self.assertEqual(0, znc.wait())
-
-
-    @contextmanager
-    def run_ircd(self):
-        ircd = pexpect.spawnu('socat', ['stdio', 'tcp6-listen:12345,reuseaddr'])
-        yield ircd
-        ircd.terminate()
-
-
-    @contextmanager
-    def run_client(self):
-        client = pexpect.spawnu('socat', ['stdio', 'tcp6:[::1]:12345'])
-        yield client
-        client.terminate()
-
-
     def test_connect(self):
-        with self.run_ircd() as ircd:
-                time.sleep(3)
-                with self.run_client() as client:
-                    client.sendline('PASS :hunter2')
-                    ircd.expect_exact('hunter2')
-                    ircd.sendline('Welcome')
-                    client.expect_exact('Welcome')
+        for i in range(1, 100):
+            x = pexpect.spawnu('echo', ['hello'])
+            x.expect_exact('hello')
 
 
 if __name__ == '__main__':
