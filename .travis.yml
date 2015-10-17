@@ -5,5 +5,9 @@ script:
   - ip a
   - ifconfig -a
   - netstat -anp
+  - sudo modprobe ipv6
+  - ip a
+  - ifconfig -a
+  - netstat -anp
 dist: trusty
 sudo: required
