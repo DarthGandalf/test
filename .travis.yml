@@ -5,3 +5,5 @@ script:
   - ip a
   - ifconfig -a
   - netstat -anp
+dist: trusty
+sudo: required
