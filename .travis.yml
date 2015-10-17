@@ -1,9 +1,7 @@
 language: cpp
 compiler:
 	- gcc
+os: linux
 script:
-  - /bin/true
-notification:
-	irc:
-		channels:
-			- "irc.freenode.net#shellium-bots"
+  - ip a
+  - ifconfig -a
