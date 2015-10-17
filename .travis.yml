@@ -4,3 +4,4 @@ compiler:
 script:
   - ip a
   - ifconfig -a
+  - netstat -anp
