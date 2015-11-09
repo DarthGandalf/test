@@ -1,5 +1,4 @@
 version: 0.0.0.0.1-branch-{branch}-build-{build}
 build_script:
-  - c:\msys64\usr\bin\find / -iname if.h
   - c:\msys64\usr\bin\pacman -Qo /usr/include/net/if.h
 test: off
