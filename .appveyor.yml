@@ -1,4 +1,4 @@
 version: 0.0.0.0.1-branch-{branch}-build-{build}
 build_script:
-  - echo hi
+  - c:\msys64\usr\bin\find / -iname if.h
 test: off
