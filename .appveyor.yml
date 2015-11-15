@@ -1,5 +1,5 @@
 version: 0.0.0.0.1-branch-{branch}-build-{build}
 build_script:
-  - c:\msys64\usr\bin\pacman -Qo /usr/include/net/if.h
-  - c:\msys64\usr\bin\pacman -Qo /usr/include/sys/ioctl.h
+  - c:\msys64\usr\bin\ls -l /mingw32/bin
+  - c:\msys64\usr\bin\ls -l /mingw64/bin
 test: off
