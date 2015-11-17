@@ -1,5 +1,4 @@
 version: 0.0.0.0.1-branch-{branch}-build-{build}
 build_script:
-  - c:\msys64\usr\bin\ls -l /mingw32/bin
-  - c:\msys64\usr\bin\ls -l /mingw64/bin
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 test: off
