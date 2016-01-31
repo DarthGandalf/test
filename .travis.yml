@@ -1,9 +1,7 @@
 language: cpp
-compiler:
-  - gcc
+os: osx
+compiler: clang
 script:
-  - ip a
-  - ifconfig -a
-  - netstat -anp
-dist: trusty
-sudo: required
+  - brew update
+  - brew install gettext
+  - find $(brew --prefix gettext)
