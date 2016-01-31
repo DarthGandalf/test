@@ -4,4 +4,5 @@ compiler: clang
 script:
   - brew update
   - brew install gettext
-  - find $(brew --prefix gettext)
+  - brew --prefix gettext
+  - ls -l -R /usr/local/opt/gettext
