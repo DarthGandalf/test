@@ -6,3 +6,4 @@ script:
   - brew install gettext
   - brew --prefix gettext
   - ls -l -R /usr/local/opt/gettext
+  - ls -l -R /usr/local/opt/gettext/
