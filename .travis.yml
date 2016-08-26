@@ -4,7 +4,8 @@ sudo: required
 dist: trusty
 compiler: clang
 script:
-  - clang++ -std=c++11 -fsanitize=thread -O1 -fPIE main.cpp -O main.o
+  - ls -l
+  - clang++ -std=c++11 -fsanitize=thread -O1 -fPIE -O main.o main.cpp
   - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -licuuc -licudata -lboost_locale -O main
   - ldd main
   - ./main
