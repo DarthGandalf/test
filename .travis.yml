@@ -5,7 +5,7 @@ dist: trusty
 compiler: clang
 script:
   - ls -l
-  - clang++ -std=c++11 -fsanitize=thread -O1 -fPIE -O main.o main.cpp
-  - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -licuuc -licudata -lboost_locale -O main
+  - clang++ -c -std=c++11 -fsanitize=thread -O1 -fPIE -o main.o main.cpp
+  - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -licuuc -licudata -lboost_locale -o main
   - ldd main
   - ./main
