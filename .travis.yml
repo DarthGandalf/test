@@ -1,9 +1,10 @@
 language: cpp
-os: osx
+os: linux
+sudo: required
+dist: trusty
 compiler: clang
 script:
-  - brew update
-  - brew install gettext
-  - brew --prefix gettext
-  - ls -l -R /usr/local/opt/gettext
-  - ls -l -R /usr/local/opt/gettext/
+  - clang++ -std=c++11 -fsanitize=thread -O1 -fPIE main.cpp -O main.o
+  - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -licuuc -licudata -lboost_locale -O main
+  - ldd main
+  - ./main
