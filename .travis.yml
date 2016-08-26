@@ -9,6 +9,6 @@ install:
 script:
   - ls -l
   - clang++ -c -std=c++11 -fsanitize=thread -O1 -fPIE -o main.o main.cpp
-  - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -licuuc -licudata -lboost_locale -o main
+  - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -licuuc -licudata -o main
   - ldd main
   - ./main
