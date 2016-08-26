@@ -6,6 +6,6 @@ compiler: clang
 script:
   - ls -l
   - clang++ -c -std=c++11 -fsanitize=thread -O1 -fPIE -o main.o main.cpp
-  - clang++ -fsanitize=thread -pie main.o -ldl -lpthread -lssl -lcrypto -lz -o main
+  - clang++ -fsanitize=thread -pie main.o -o main
   - ldd main
   - ./main
