@@ -1,11 +1,11 @@
 language: cpp
 os: linux
 sudo: required
-#dist: trusty
-compiler: clang
+dist: trusty
+compiler: gcc
 script:
   - sysctl kernel.randomize_va_space
-  - clang++ -c -std=c++11 -fsanitize=thread -O1 -fPIE -o main.o main.cpp
-  - clang++ -fsanitize=thread -pie main.o -o main
+  - g++ -c -std=c++11 -fsanitize=thread -O1 -fPIE -o main.o main.cpp
+  - g++ -fsanitize=thread -pie main.o -o main
   - ldd main
   - ./main
