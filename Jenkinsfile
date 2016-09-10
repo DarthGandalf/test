@@ -1,6 +1,6 @@
 #!groovy
 node {
-  step([$class: 'GitHubCommitStatusSetter'])
+  step([$class: 'GitHubCommitStatusSetter', errorHandlers: [[$class: 'ChangingBuildStatusErrorHandler', result: 'FAILURE']]])
   stage('My New Stage') {
     timestamps {
       sh 'echo hello'
