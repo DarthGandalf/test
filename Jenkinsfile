@@ -1,5 +1,6 @@
 #!groovy
 node {
+  step([$class: 'GitHubCommitStatusSetter'])
   stage('My New Stage') {
     timestamps {
       sh 'echo hello'
@@ -7,6 +8,7 @@ node {
       sh 'pwd'
       checkout scm
       sh 'ls -l'
+      sh 'false'
     }
   }
 }
