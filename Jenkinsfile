@@ -14,5 +14,5 @@ node {
       sh 'echo bye'
     }
   }
-  step([$class: 'GitHubCommitStatusSetter', errorHandlers: [[$class: 'ChangingBuildStatusErrorHandler', result: 'FAILURE']], statusResultSource: [$class: 'ConditionalStatusResultSource', results: []]])
+  step([$class: 'GitHubCommitStatusSetter'])
 }
