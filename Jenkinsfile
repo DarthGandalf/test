@@ -10,7 +10,7 @@ node {
         sh 'pwd'
         checkout scm
         sh 'ls -l'
-        sh 'false'
+        sh 'true'
         sh 'echo bye'
       }
       currentBuild.result = 'SUCCESS'
