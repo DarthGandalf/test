@@ -1,4 +1,0 @@
-version: 0.0.0.0.1-branch-{branch}-build-{build}
-build_script:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-test: off
