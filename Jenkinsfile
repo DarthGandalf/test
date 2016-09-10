@@ -8,6 +8,10 @@ node {
       sh 'pwd'
       sh 'ls -l'
       sh 'env'
+      timeout(time:5, unit;'SECONDS') {
+        sh 'sleep 10'
+      }
+      sh 'echo bye'
     }
   }
   step([$class: 'GitHubCommitStatusSetter', errorHandlers: [[$class: 'ChangingBuildStatusErrorHandler', result: 'FAILURE']], statusResultSource: [$class: 'ConditionalStatusResultSource', results: []]])
