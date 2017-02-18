@@ -18,12 +18,9 @@ script:
   - sudo qemu-nbd --connect=/dev/nbd0 FreeBSD-11.0-RELEASE-i386.qcow2 &
   - while [[ ! -b /dev/nbd0p1 ]]; do sleep 1; done
   - sudo mkdir /mnt/fbsd
-  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p1 /mnt/fbsd -o rw,allow_others
+  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd -o rw
   - ls -l /mnt/fbsd
-  - fusermount -u /mnt/fbsd
-  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd -o rw,allow_others
-  - ls -l /mnt/fbsd
-  - fusermount -u /mnt/fbsd
+  - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
     # rc.conf
     #ifconfig_vtnet0_ipv6="inet6 fd1a:cd75:f79f:7c72::1 prefixlen 64"
