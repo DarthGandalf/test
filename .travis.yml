@@ -21,9 +21,14 @@ script:
   - echo 'auth required pam_unix.so nullok' | sudo tee /mnt/fbsd/etc/pam.d/sshd
   - echo 'ifconfig_vtnet0_ipv6="inet6 fd1a:cd75:f79f:7c72::1 prefixlen 64"' | sudo tee /mnt/fbsd/etc/rc.conf
   - echo 'sshd_enable="YES"' | sudo tee -a /mnt/fbsd/etc/rc.conf
+  - echo 'PermitRootLogin yes' | sudo tee -a /mnt/fbsd/etc/ssh/ssd_config
+  - echo 'PermitEmptyPasswords yes' | sudo tee -a /mnt/fbsd/etc/ssh/ssd_config
   - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
   - sudo qemu-system-x86_64 -name FreeBSD -daemonize -display none -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 512 -smp cores=2 -netdev tap,id=controlnet,ifname=fbctrl,script=no,downscript=no -device virtio-net-pci,netdev=controlnet
+  - ifconfig -a
+  - sleep 10
+  - ifconfig -a
   - sudo ip a a fd1a:cd75:f79f:7c72::2/64 dev fbctrl
   - sudo ifconfig fbctrl up
   - ping6 -c 200 fd1a:cd75:f79f:7c72::1 || true
