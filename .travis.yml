@@ -1,0 +1,7 @@
+sudo: required
+dist: trusty
+
+script:
+  - ls -l /dev
+  - sudo modprobe nbd
+  - ls -l /dev
