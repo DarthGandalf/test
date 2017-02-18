@@ -8,7 +8,7 @@ install:
   - sudo apt-get install -y autoconf automake libfuse-dev e2fslibs-dev  # for ufs
   - git clone https://github.com/jblumsch/fuse-ufs2
   - cd fuse-ufs2
-  - ./autogen.sh && ./configure && make && sudo make install
+  - ./autogen.sh && ./configure && make -j`nproc` && sudo make install
   - cd ..
 
 script:
