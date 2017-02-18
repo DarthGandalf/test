@@ -5,7 +5,7 @@ dist: trusty
 install:
   - sudo apt-get update
   - sudo apt-get install -y qemu-utils qemu-system-x86
-  - sudo apt-get install -y autoconf automake libfuse-dev  # for ufs
+  - sudo apt-get install -y autoconf automake libfuse-dev e2fslibs-dev  # for ufs
   - git clone https://github.com/jblumsch/fuse-ufs2
   - cd fuse-ufs2
   - ./autogen.sh && ./configure && make && sudo make install
