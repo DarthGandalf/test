@@ -8,11 +8,7 @@ install:
 script:
   - wget https://download.freebsd.org/ftp/releases/VM-IMAGES/11.0-RELEASE/i386/Latest/FreeBSD-11.0-RELEASE-i386.qcow2.xz
   - unxz FreeBSD-11.0-RELEASE-i386.qcow2.xz
-  - ls -l /dev
   - sudo modprobe nbd
-  - ls -l /dev
   - sudo qemu-nbd --connect=/dev/nbd0 FreeBSD-11.0-RELEASE-i386.qcow2 &
-  - sleep 1
-  - ls -l /dev
-  - pkill qemu-ndb
-  - ls -l /dev
+  - while [[ ! -b /dev/nbd0p1 ]]; do sleep 1; done
+  - sudo pkill qemu-ndb
