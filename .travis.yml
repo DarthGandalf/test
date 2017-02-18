@@ -34,7 +34,7 @@ script:
     #- sudo ip a a 192.168.57.1/24 dev fbctrl
     #- sudo ifconfig fbctrl up
     #- ifconfig
-  - onfreebsd() { ssh -vvv -o StrictHostKeyChecking=no -P 10022 root@127.0.0.1 "$@"; }
+  - onfreebsd() { ssh -vvv -o StrictHostKeyChecking=no -p 10022 root@127.0.0.1 "$@"; }
     #- for ((i=0; i<20; ++i)); do if ping -c4 192.168.57.2; then break; fi; sleep 10; done
   - for ((i=0; i<20; ++i)); do if onfreebsd true; then break; fi; echo retrying; done
   - onfreebsd uname -a
