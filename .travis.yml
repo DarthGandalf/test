@@ -4,7 +4,7 @@ dist: trusty
 
 install:
   - sudo apt-get update
-  - sudo apt-get install -y qemu-utils qemu-system-x86
+  - sudo apt-get install -y qemu-utils qemu-system-x86 libfuse-dev
   - git clone https://github.com/jblumsch/fuse-ufs2
   - cd fuse-ufs2
   - ./configure && make && sudo make install
@@ -17,10 +17,10 @@ script:
   - sudo qemu-nbd --connect=/dev/nbd0 FreeBSD-11.0-RELEASE-i386.qcow2 &
   - while [[ ! -b /dev/nbd0p1 ]]; do sleep 1; done
   - sudo mkdir /mnt/fbsd
-  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p1 /mnt/fbsd
+  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p1 /mnt/fbsd -o rw,allow_others
   - ls -l /mnt/fbsd
   - fusermount -u /mnt/fbsd
-  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd
+  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd -o rw,allow_others
   - ls -l /mnt/fbsd
   - fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
