@@ -1,7 +1,17 @@
 sudo: required
 dist: trusty
 
+install:
+  - sudo apt-get update
+  - sudo apt-get install -y qemu-utils qemu-system-x86
+
 script:
+  - wget https://download.freebsd.org/ftp/releases/VM-IMAGES/11.0-RELEASE/i386/Latest/FreeBSD-11.0-RELEASE-i386.qcow2.xz
+  - unxz FreeBSD-11.0-RELEASE-i386.qcow2.xz
   - ls -l /dev
   - sudo modprobe nbd
+  - ls -l /dev
+  - qemu-ndb --connect=/dev/ndb0 FreeBSD-11.0-RELEASE-i386.qcow2.xz &
+  - ls -l /dev
+  - pkill qemu-ndb
   - ls -l /dev
