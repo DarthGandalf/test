@@ -33,6 +33,7 @@ script:
   - sudo ifconfig fbctrl up
   - ifconfig
   - onfreebsd() { ssh -vvv -o StrictHostKeyChecking=no root@192.168.57.2 "$@"; }
-  - for ((i=0; i<30; ++i)); do if ping -c4 192.168.57.2 && onfreebsd true; then break; fi; sleep 10; done
+  - for ((i=0; i<30; ++i)); do if ping -c4 192.168.57.2; then break; fi; sleep 10; done
+  - sleep 30
   - onfreebsd uname -a
   - sudo pkill qemu-system-x86_64
