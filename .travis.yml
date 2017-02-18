@@ -7,9 +7,7 @@ install:
   - sudo apt-get install -y qemu-utils qemu-system-x86
   - sudo apt-get install -y autoconf automake libfuse-dev e2fslibs-dev  # for ufs
   - git clone https://github.com/jblumsch/fuse-ufs2
-  - cd fuse-ufs2
-  - ./autogen.sh && ./configure && make -j`nproc` && sudo make install
-  - cd ..
+  - (cd fuse-ufs2 && ./autogen.sh && ./configure && make -j`nproc` && sudo make install)
 
 script:
   - wget https://download.freebsd.org/ftp/releases/VM-IMAGES/11.0-RELEASE/i386/Latest/FreeBSD-11.0-RELEASE-i386.qcow2.xz
@@ -19,12 +17,14 @@ script:
   - while [[ ! -b /dev/nbd0p1 ]]; do sleep 1; done
   - sudo mkdir /mnt/fbsd
   - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd -o rw
-  - sudo ls -l /mnt
   - sudo ls -l /mnt/fbsd
+  - echo 'auth required pam_unix.so nullok' | sudo tee /mnt/fbsd/etc/pam.d/sshd
+  - echo 'ifconfig_vtnet0_ipv6="inet6 fd1a:cd75:f79f:7c72::1 prefixlen 64"' | sudo tee /mnt/fbsd/etc/rc.conf
+  - echo 'sshd_enable="YES"' | sudo tee -a /mnt/fbsd/etc/rc.conf
   - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
-    # rc.conf
-    #ifconfig_vtnet0_ipv6="inet6 fd1a:cd75:f79f:7c72::1 prefixlen 64"
-    #sshd_enable="YES"
-    # pam.d/sshd
-    #auth required pam_unix.so nullok
+  - sudo qemu-system-x86_64 -name FreeBSD -daemonize -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 512 -smp cores=2 -netdev tap,id=controlnet,ifname=fbctrl,script=no,downscript=no -device virtio-net-pci,netdev=controlnet
+  - sudo ip a a fd1a:cd75:f79f:7c72::2/64 dev fbctrl
+  - sudo ifconfig fbctrl up
+  - ping6 -c 200 fd1a:cd75:f79f:7c72::1 || true
+  - ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@fd1a:cd75:f79f:7c72::1 uname -a
