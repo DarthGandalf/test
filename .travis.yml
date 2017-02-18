@@ -23,7 +23,7 @@ script:
   - echo 'sshd_enable="YES"' | sudo tee -a /mnt/fbsd/etc/rc.conf
   - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
-  - sudo qemu-system-x86_64 -name FreeBSD -daemonize -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 512 -smp cores=2 -netdev tap,id=controlnet,ifname=fbctrl,script=no,downscript=no -device virtio-net-pci,netdev=controlnet
+  - sudo qemu-system-x86_64 -name FreeBSD -daemonize -display none -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 512 -smp cores=2 -netdev tap,id=controlnet,ifname=fbctrl,script=no,downscript=no -device virtio-net-pci,netdev=controlnet
   - sudo ip a a fd1a:cd75:f79f:7c72::2/64 dev fbctrl
   - sudo ifconfig fbctrl up
   - ping6 -c 200 fd1a:cd75:f79f:7c72::1 || true
