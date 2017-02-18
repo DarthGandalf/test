@@ -24,8 +24,10 @@ script:
   - echo 'PermitRootLogin yes' | sudo tee -a /mnt/fbsd/etc/ssh/sshd_config
   - echo 'PermitEmptyPasswords yes' | sudo tee -a /mnt/fbsd/etc/ssh/sshd_config
   - sudo fusermount -u /mnt/fbsd
+    # This seems to force sync, before qemu-nbd is killed
+  - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd
+  - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
-  - sleep 3
   - sudo qemu-system-x86_64 -name FreeBSD -daemonize -display none -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 1024 -smp cores=2 -netdev tap,id=controlnet,ifname=fbctrl,script=no,downscript=no -device virtio-net-pci,netdev=controlnet -rtc base=localtime,clock=host,driftfix=none
   - sudo ip a a 192.168.57.1/24 dev fbctrl
   - sudo ifconfig fbctrl up
