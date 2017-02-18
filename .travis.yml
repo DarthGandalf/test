@@ -32,7 +32,7 @@ script:
   - sudo ip a a 192.168.57.1/24 dev fbctrl
   - sudo ifconfig fbctrl up
   - ifconfig
-  - alias onfreebsd='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@192.168.57.2'
+  - onfreebsd() { ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@192.168.57.2 "$@" }
   - for ((i=0; i<30; ++i)); do if ping -c4 192.168.57.2 && onfreebsd true; then break; fi; sleep 10; done
   - onfreebsd uname -a
   - sudo pkill qemu-system-x86_64
