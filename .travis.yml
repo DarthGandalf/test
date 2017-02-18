@@ -11,7 +11,7 @@ script:
   - ls -l /dev
   - sudo modprobe nbd
   - ls -l /dev
-  - qemu-ndb --connect=/dev/ndb0 FreeBSD-11.0-RELEASE-i386.qcow2.xz &
+  - qemu-nbd --connect=/dev/ndb0 FreeBSD-11.0-RELEASE-i386.qcow2.xz &
   - ls -l /dev
   - pkill qemu-ndb
   - ls -l /dev
