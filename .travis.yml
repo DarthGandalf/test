@@ -36,6 +36,6 @@ script:
     #- ifconfig
   - onfreebsd() { ssh -vvv -o StrictHostKeyChecking=no -p 10022 root@127.0.0.1 "$@"; }
     #- for ((i=0; i<20; ++i)); do if ping -c4 192.168.57.2; then break; fi; sleep 10; done
-  - for ((i=0; i<20; ++i)); do if onfreebsd true; then break; fi; echo retrying; done
+  - for ((i=0; i<20; ++i)); do if onfreebsd true; then break; fi; echo retrying; sleep 5; done
   - onfreebsd uname -a
   - onfreebsd ls -l /
