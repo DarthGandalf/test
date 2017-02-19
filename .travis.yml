@@ -29,14 +29,9 @@ script:
   - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd
   - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
-    #- sudo qemu-system-x86_64 -name FreeBSD -daemonize -display none -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 1024 -smp cores=2 -netdev tap,id=controlnet,ifname=fbctrl,script=no,downscript=no -device virtio-net-pci,netdev=controlnet -rtc base=localtime,clock=host,driftfix=none
   - sudo qemu-system-x86_64 -daemonize -display none -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 1024 -smp cores=2 -netdev user,id=controlnet,hostfwd=tcp::10022-:22 -device virtio-net-pci,netdev=controlnet -rtc base=localtime,clock=host,driftfix=none
+    # ssh hangs on "debug2: exec request accepted on channel 0" without this sleep
   - sleep 60
-    #- sudo ip a a 192.168.57.1/24 dev fbctrl
-    #- sudo ifconfig fbctrl up
-    #- ifconfig
-  - onfreebsd() { ssh -t -vvv -o StrictHostKeyChecking=no -p 10022 root@127.0.0.1 "$@"; }
-    #- for ((i=0; i<20; ++i)); do if ping -c4 192.168.57.2; then break; fi; sleep 10; done
-  - for ((i=0; i<20; ++i)); do if onfreebsd true; then break; fi; echo retrying; sleep 10; done
+  - onfreebsd() { ssh -t -o StrictHostKeyChecking=no -p 10022 root@127.0.0.1 "$@"; }
   - onfreebsd uname -a
   - onfreebsd ls -l /
