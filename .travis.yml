@@ -10,3 +10,6 @@ script:
   - pip3 --version
   - echo $PATH
   - ls -l /opt/python
+  - which easy_install3
+  - easy_install3 --version
+  - easy_install3 coverage
