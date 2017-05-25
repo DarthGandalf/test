@@ -12,27 +12,29 @@ install:
 script:
   - wget https://download.freebsd.org/ftp/releases/VM-IMAGES/11.0-RELEASE/i386/Latest/FreeBSD-11.0-RELEASE-i386.qcow2.xz
   - unxz -v FreeBSD-11.0-RELEASE-i386.qcow2.xz
+    # Edit some files inside image before starting it to allow ssh
   - sudo modprobe nbd
   - sudo qemu-nbd --connect=/dev/nbd0 FreeBSD-11.0-RELEASE-i386.qcow2 &
-  - while [[ ! -b /dev/nbd0p1 ]]; do sleep 1; done
+  - while [[ ! -b /dev/nbd0p3 ]]; do sleep 1; done
   - sudo mkdir /mnt/fbsd
   - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd -o rw
   - sudo ls -l /mnt/fbsd
-  - echo 'auth required pam_unix.so nullok' | sudo tee /mnt/fbsd/etc/pam.d/sshd
-    #- echo 'ifconfig_vtnet0="inet 192.168.57.2/24"' | sudo tee /mnt/fbsd/etc/rc.conf
   - echo 'ifconfig_vtnet0="DHCP"' | sudo tee /mnt/fbsd/etc/rc.conf
   - echo 'sshd_enable="YES"' | sudo tee -a /mnt/fbsd/etc/rc.conf
   - echo 'PermitRootLogin yes' | sudo tee -a /mnt/fbsd/etc/ssh/sshd_config
   - echo 'PermitEmptyPasswords yes' | sudo tee -a /mnt/fbsd/etc/ssh/sshd_config
+  - echo 'auth required pam_unix.so nullok' | sudo tee /mnt/fbsd/etc/pam.d/sshd
   - sudo fusermount -u /mnt/fbsd
     # This seems to force sync, before qemu-nbd is killed
   - sudo /usr/local/bin/fuse-ufs /dev/nbd0p3 /mnt/fbsd
   - sudo fusermount -u /mnt/fbsd
   - sudo pkill qemu-nbd
   - sudo qemu-system-x86_64 -daemonize -display none -drive file=FreeBSD-11.0-RELEASE-i386.qcow2,if=virtio -m 1024 -netdev user,id=controlnet,hostfwd=tcp::10022-:22 -device virtio-net-pci,netdev=controlnet -rtc base=localtime,clock=host,driftfix=none
-    # ssh hangs on "debug2: exec request accepted on channel 0" without this sleep
-    #  - sleep 60
   - onfreebsd() { ssh -t -o StrictHostKeyChecking=no -p 10022 root@127.0.0.1 "$@"; }
+    # Wait until ssh is up and running
   - for ((i=0; i<20; ++i)); do if onfreebsd true; then break; fi; echo retrying; sleep 10; done
   - onfreebsd uname -a
   - onfreebsd ls -l /
+  - yes | onfreebsd pkg update
+  - yes | onfreebsd pkg install cmake
+  - git remote add freebsd 
