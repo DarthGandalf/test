@@ -8,4 +8,5 @@ install:
 script:
   - which pip3
   - pip3 --version
-  - ls -l /usr/bin/pip*
+  - echo $PATH
+  - ls -l /opt/python
