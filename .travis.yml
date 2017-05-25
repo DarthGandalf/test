@@ -1,15 +1,13 @@
 language: cpp
 sudo: required
 dist: trusty
-
-install:
-  - sudo apt-get update
+os:
+  - osx
+  - linux
 
 script:
   - which pip3
   - pip3 --version
   - echo $PATH
-  - ls -l /opt/python
-  - which easy_install3
-  - easy_install3 --version
-  - easy_install3 coverage
+  - /usr/bin/pip3 --version
+  - /usr/bin/pip3 install coverage
