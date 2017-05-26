@@ -5,7 +5,12 @@ os:
   - osx
   - linux
 
+install:
+  - sudo apt-get update
+  - sudo apt-get install -y python3-pip
+
 script:
+  - pyenv versions
   - which pip3
   - pip3 --version
   - echo $PATH
