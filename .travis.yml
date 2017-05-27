@@ -5,6 +5,7 @@ dist: trusty
 script:
   - find /opt/python/3.5.2
   - ls -l ~/virtualenv
+  - ls -l /opt/python
   - source ~/virtualenv/python3.3/bin/activate
   - "echo pkg-config path: [$PKG_CONFIG_PATH]"
   - which python
