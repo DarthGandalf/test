@@ -5,6 +5,7 @@ dist: trusty
 script:
   - ls -l ~/virtualenv
   - ls -l /opt/python
+  - find ~/virtualenv/python3.3/
   - source ~/virtualenv/python3.3/bin/activate
   - env
   - which python
